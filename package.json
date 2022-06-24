@@ -1,0 +1,17 @@
+{
+  "name": "indeed_crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.11",
+    "firebase": "^9.8.3",
+    "firebase-admin": "^11.0.0"
+  }
+}
