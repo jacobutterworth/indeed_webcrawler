@@ -1,6 +1,8 @@
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 const yargs = require('yargs');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
 const argv = yargs
   .usage('$0 [-j job] [-l location]', 'Indeed web crawler')
@@ -31,9 +33,7 @@ const argv = yargs
 
 const job = argv.job;
 const location = argv.location;
-const axios = require('axios');
-const cheerio = require('cheerio');
-let urlInput = `https://uk.indeed.com/jobs?q=${job}&l=${location}`;
+const urlInput = `https://uk.indeed.com/jobs?q=${job}&l=${location}`;
 console.log(urlInput);
 
 axios.get(urlInput).then((res) => {
@@ -52,17 +52,12 @@ axios.get(urlInput).then((res) => {
 
   const companyNames = $(jobCardMainContent).find('.companyName');
 
-  const companyLocations = $(jobCardMainContent)
-    .find('resultContent')
-    .find('.companyLocation')
-    .children();
-
-  // const companyLocations = $('.slider_list').find('.companyLocation').html();
+  const companyLocations = $(jobCardMainContent).find('.companyLocation');
 
   Object.values(jobTitles).forEach(function (value, index) {
     getJobTitle(value);
     getJobX(companyNames[index], html, 'name');
-    // getJobX(companyLocations.index, html, 'location');
+    getJobX(companyLocations[index], html, 'location');
   });
 
   console.log('end');
@@ -70,7 +65,7 @@ axios.get(urlInput).then((res) => {
 
 function getJobTitle(element) {
   const title = element.attribs['title'];
-  console.log('Title: ' + title);
+  console.log('Job title: ' + title);
 }
 
 function getJobX(element, html, xVal) {
