@@ -63,7 +63,7 @@ axios.get(urlInput).then((res) => {
   console.log('end');
 });
 
-function getJobTitle(element) {
+function getJobTitle(element, index) {
   try {
     const title = element.attribs['title'];
     console.log('Job title: ' + title);
@@ -72,7 +72,7 @@ function getJobTitle(element) {
   }
 }
 
-function getJobX(element, html, xVal) {
+function getJobX(element, html, xVal, index) {
   const $1 = cheerio.load(html);
   let result = $1(element).html();
   try {
