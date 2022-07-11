@@ -64,15 +64,23 @@ axios.get(urlInput).then((res) => {
 });
 
 function getJobTitle(element) {
-  const title = element.attribs['title'];
-  console.log('Job title: ' + title);
+  try {
+    const title = element.attribs['title'];
+    console.log('Job title: ' + title);
+  } catch (e) {
+    console.log('Job title not found for index: ' + index);
+  }
 }
 
 function getJobX(element, html, xVal) {
   const $1 = cheerio.load(html);
   let result = $1(element).html();
-  if (result.substring(0, 18) == '<a data-tn-element') {
-    result = $1(element).children().html();
+  try {
+    if (result.substring(0, 18) == '<a data-tn-element') {
+      result = $1(element).children().html();
+    }
+    console.log('Company ' + xVal + ': ' + result);
+  } catch (e) {
+    console.log('Job ' + xVal + ' not found for index: ' + index);
   }
-  console.log('Company ' + xVal + ': ' + result);
 }
