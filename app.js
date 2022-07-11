@@ -54,10 +54,17 @@ axios.get(urlInput).then((res) => {
 
   const companyLocations = $(jobCardMainContent).find('.companyLocation');
 
+  const salaries = $('.jobsearch-ResultsList')
+    .find('.resultContent')
+    .find('.salaryOnly')
+    .find('.salary-snippet-container')
+    .children();
+
   Object.values(jobTitles).forEach(function (value, index) {
     getJobTitle(value);
     getJobX(companyNames[index], html, 'name');
     getJobX(companyLocations[index], html, 'location');
+    getJobSalary(salaries[index], html, index);
   });
 
   console.log('end');
@@ -82,5 +89,15 @@ function getJobX(element, html, xVal, index) {
     console.log('Company ' + xVal + ': ' + result);
   } catch (e) {
     console.log('Job ' + xVal + ' not found for index: ' + index);
+  }
+}
+
+function getJobSalary(element, html, index) {
+  const $ = cheerio.load(html);
+  try {
+    let salary = $(element)[0].children[1].data;
+    console.log('Job salary: ' + salary);
+  } catch (e) {
+    console.log('Salary for index: ' + index + ' not found');
   }
 }
